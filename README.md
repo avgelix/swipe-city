@@ -76,8 +76,11 @@ This project uses Google Maps API to display dynamic city backgrounds that chang
 
 ### Local Development Setup
 
-1. Copy `.env.local` file (already created in the project)
-2. Add your API key:
+1. Copy the example environment file:
+   ```bash
+   cp .env.example .env.local
+   ```
+2. Edit `.env.local` and add your actual API key:
    ```
    VITE_GOOGLE_MAPS_API_KEY=your_actual_api_key_here
    ```
