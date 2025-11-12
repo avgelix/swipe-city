@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import QuestionCard from './components/QuestionCard';
+import SwipeCard from './components/SwipeCard';
 import ResultsPage from './components/ResultsPage';
 import { questions } from '../questions';
 
@@ -68,7 +68,8 @@ function App() {
           </p>
         </div>
         
-        <QuestionCard 
+        <SwipeCard 
+          key={currentQuestionIndex}
           question={currentQuestion}
           currentQuestion={currentQuestionIndex + 1}
           totalQuestions={questions.length}
