@@ -45,6 +45,8 @@ function MapBackground({ questionNumber }) {
   useEffect(() => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
+    console.log('🗺️ MapBackground mounted, API key exists:', !!apiKey);
+
     // If no API key is provided, don't try to load the map
     if (!apiKey || apiKey === 'your_api_key_here') {
       console.warn('Google Maps API key not configured. Map background will not display.');
@@ -53,6 +55,7 @@ function MapBackground({ questionNumber }) {
 
     const initMap = () => {
       if (mapRef.current && !mapInstanceRef.current && window.google?.maps) {
+        console.log('Initializing Google Map with city:', currentCity.name);
         // Create new map instance (only once)
         mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
           center: { lat: currentCity.lat, lng: currentCity.lng },
@@ -72,25 +75,37 @@ function MapBackground({ questionNumber }) {
           ]
         });
         setIsLoaded(true);
+        console.log('Google Map initialized successfully');
       }
     };
 
     // Load Google Maps dynamically using script tag
-    const loadGoogleMaps = async () => {
+    const loadGoogleMaps = () => {
       try {
         // Check if Google Maps is already loaded
         if (window.google?.maps) {
+          console.log('Google Maps already loaded, initializing map');
           initMap();
           return;
         }
 
+        // Check if script is already being loaded
+        const existingScript = document.querySelector('script[src*="maps.googleapis.com"]');
+        if (existingScript) {
+          console.log('Google Maps script already exists, waiting for load');
+          existingScript.addEventListener('load', initMap);
+          return;
+        }
+
         // Create script element
+        console.log('Loading Google Maps script');
         const script = document.createElement('script');
         script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=weekly`;
         script.async = true;
         script.defer = true;
         
         script.onload = () => {
+          console.log('Google Maps script loaded');
           initMap();
         };
         
@@ -119,21 +134,24 @@ function MapBackground({ questionNumber }) {
 
   // Don't render anything if there's an error or no API key
   if (error) {
+    console.error('MapBackground error, not rendering:', error);
     return null;
   }
 
+  console.log('🗺️ MapBackground rendering, isLoaded:', isLoaded);
+
   return (
     <div 
-      className="fixed inset-0 -z-10"
+      className="fixed inset-0 z-0"
       style={{
-        opacity: 0.2,
-        filter: 'blur(2px)',
+        opacity: 0.8, // Much more visible for testing
+        filter: 'blur(0px)', // No blur for testing
         pointerEvents: 'none'
       }}
     >
       <div 
         ref={mapRef} 
-        className="w-full h-full"
+        className="w-full h-full bg-blue-200"
         aria-hidden="true"
       />
     </div>
