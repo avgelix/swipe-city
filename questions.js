@@ -27,8 +27,8 @@ export const questions = [
     text: 'Imagine waking up to snow on a winter morning. Does this excite you or make you want to stay in bed forever?',
     type: 'binary',
     options: {
-      left: 'Stay in bed (prefer warm climates)',
-      right: 'Excited (embrace cold/snow)'
+      left: 'Stay in bed',
+      right: 'Excited'
     }
   },
   {
@@ -55,8 +55,8 @@ export const questions = [
     text: 'A powerful thunderstorm rolls in. What\'s your reaction?',
     type: 'binary',
     options: {
-      left: 'Nervous (prefer calm weather)',
-      right: 'Thrilled (love dramatic weather)'
+      left: 'Nervous',
+      right: 'Thrilled'
     }
   },
 
@@ -67,8 +67,8 @@ export const questions = [
     text: 'It\'s 11 PM on a Tuesday. Where do you want to be?',
     type: 'binary',
     options: {
-      left: 'In bed with a book (quiet life)',
-      right: 'Out grabbing late-night food (vibrant nightlife)'
+      left: 'In bed with a book',
+      right: 'Out grabbing late-night food'
     }
   },
   {
@@ -94,8 +94,8 @@ export const questions = [
     text: 'The sound of sirens, honking, and people shouting outside at 3 AM is...',
     type: 'binary',
     options: {
-      left: 'Unacceptable (need peace and quiet)',
-      right: 'The soundtrack of life (embrace the chaos)'
+      left: 'Unacceptable',
+      right: 'The soundtrack of life'
     }
   },
 
@@ -134,8 +134,8 @@ export const questions = [
     text: 'It\'s Friday night. Your ideal dinner involves...',
     type: 'binary',
     options: {
-      left: 'Cooking at home (familiar comfort)',
-      right: 'Trying a new restaurant (culinary adventure)'
+      left: 'Cooking at home',
+      right: 'Trying a new restaurant'
     }
   },
   {
@@ -162,8 +162,8 @@ export const questions = [
     text: 'You overhear a heated political debate at a coffee shop. Your reaction?',
     type: 'binary',
     options: {
-      left: 'Uncomfortable (prefer apolitical spaces)',
-      right: 'Energized (love civic engagement)'
+      left: 'Uncomfortable',
+      right: 'Energized'
     }
   },
   {
@@ -226,8 +226,8 @@ export const questions = [
     text: 'After a long week, you unwind by...',
     type: 'binary',
     options: {
-      left: 'Staying in (gaming, reading, streaming)',
-      right: 'Going out (shows, events, socializing)'
+      left: 'Staying in',
+      right: 'Going out'
     }
   },
 
@@ -248,8 +248,8 @@ export const questions = [
     text: 'Your closest friends and family are far away. How does this make you feel?',
     type: 'binary',
     options: {
-      left: 'Lonely (need proximity to loved ones)',
-      right: 'Liberated (embrace independence & new connections)'
+      left: 'Lonely',
+      right: 'Liberated'
     }
   },
 

@@ -71,23 +71,8 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
 
   return (
     <div className="w-full max-w-md mx-auto px-4">
-      {/* Progress Indicator */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-gray-600 font-medium">
-            Question {currentQuestion} of {totalQuestions}
-          </span>
-          <span className="text-sm text-gray-500">
-            {Math.round((currentQuestion / totalQuestions) * 100)}%
-          </span>
-        </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
-          <div
-            className="bg-zillow-blue h-2 rounded-full transition-all duration-300"
-            style={{ width: `${(currentQuestion / totalQuestions) * 100}%` }}
-          />
-        </div>
-      </div>
+      {/* Negative space where progress was */}
+      <div className="mb-6 h-12"></div>
 
       {/* Card Container with Directional Hints */}
       <div className="relative min-h-[550px] flex items-center justify-center py-8">
@@ -96,13 +81,13 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
 
         {/* Swipeable Card */}
         <motion.div
-          className="bg-gray-100 rounded-2xl p-8 min-h-[350px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing"
+          className="bg-gray-50 rounded-2xl p-8 min-h-[350px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing border border-gray-200"
           style={{
             x,
             y,
             rotate,
             opacity,
-            boxShadow: '12px 12px 24px rgba(0, 0, 0, 0.1), -12px -12px 24px rgba(255, 255, 255, 0.9)'
+            boxShadow: '6px 6px 12px rgba(0, 0, 0, 0.08), -6px -6px 12px rgba(255, 255, 255, 0.5)'
           }}
           drag
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
