@@ -21,6 +21,8 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
     setError(null);
 
     try {
+      console.log('🚀 Calling /api/gemini with answers:', answers);
+      
       // Call Vercel serverless function
       const response = await fetch('/api/gemini', {
         method: 'POST',
@@ -30,16 +32,20 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
         body: JSON.stringify({ answers }),
       });
 
+      console.log('📡 Response status:', response.status);
+
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch recommendation');
+        const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
+        console.error('❌ API Error:', errorData);
+        throw new Error(errorData.error || `API request failed with status ${response.status}`);
       }
 
       const data = await response.json();
+      console.log('✅ Success! City match:', data);
       setCityMatch(data);
     } catch (err) {
-      console.error('Error fetching city recommendation:', err);
-      setError(err.message);
+      console.error('💥 Error fetching city recommendation:', err);
+      setError(err.message || 'An unexpected error occurred. Please check the console for details.');
     } finally {
       setLoading(false);
     }
