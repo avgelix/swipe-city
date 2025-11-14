@@ -90,13 +90,13 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
       </div>
 
       {/* Card Container with Directional Hints */}
-      <div className="relative min-h-[500px] flex items-center justify-center">
+      <div className="relative min-h-[600px] flex items-center justify-center py-12">
         {/* Directional Hints */}
         <DirectionalHints x={x} y={y} options={options} />
 
         {/* Swipeable Card */}
         <motion.div
-          className="bg-white rounded-2xl shadow-xl p-8 min-h-[400px] w-full flex flex-col justify-between cursor-grab active:cursor-grabbing"
+          className="bg-white rounded-2xl shadow-xl p-8 min-h-[350px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing"
           style={{
             x,
             y,
@@ -125,11 +125,11 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
           </div>
 
           {/* Instruction Text */}
-          <div className="mt-8 border-t border-gray-200 pt-6">
+          <div className="mt-6 border-t border-gray-200 pt-4">
             <p className="text-sm text-gray-500 text-center">
               Swipe in any direction to choose
             </p>
-            <div className="mt-2 flex justify-center gap-2 text-2xl opacity-50">
+            <div className="mt-2 flex justify-center gap-2 text-xl opacity-50">
               <span>↖</span>
               <span>↑</span>
               <span>↗</span>
@@ -141,93 +141,6 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
             </div>
           </div>
         </motion.div>
-      </div>
-
-      {/* Fallback Buttons for Accessibility */}
-      <div className="mt-6 grid grid-cols-3 gap-2">
-        <button
-          onClick={() => {
-            setExitDirection({ x: -1000, y: -1000 });
-            setTimeout(() => onAnswer(options.upLeft), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↖</div>
-          <p className="text-xs font-medium truncate">{options.upLeft}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: 0, y: -1500 });
-            setTimeout(() => onAnswer(options.up), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↑</div>
-          <p className="text-xs font-medium truncate">{options.up}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: 1000, y: -1000 });
-            setTimeout(() => onAnswer(options.upRight), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↗</div>
-          <p className="text-xs font-medium truncate">{options.upRight}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: -1500, y: 0 });
-            setTimeout(() => onAnswer(options.left), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">←</div>
-          <p className="text-xs font-medium truncate">{options.left}</p>
-        </button>
-        <div className="text-center p-3 bg-gray-50 rounded opacity-50">
-          <div className="text-xl">•</div>
-        </div>
-        <button
-          onClick={() => {
-            setExitDirection({ x: 1500, y: 0 });
-            setTimeout(() => onAnswer(options.right), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">→</div>
-          <p className="text-xs font-medium truncate">{options.right}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: -1000, y: 1000 });
-            setTimeout(() => onAnswer(options.downLeft), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↙</div>
-          <p className="text-xs font-medium truncate">{options.downLeft}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: 0, y: 1500 });
-            setTimeout(() => onAnswer(options.down), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↓</div>
-          <p className="text-xs font-medium truncate">{options.down}</p>
-        </button>
-        <button
-          onClick={() => {
-            setExitDirection({ x: 1000, y: 1000 });
-            setTimeout(() => onAnswer(options.downRight), 200);
-          }}
-          className="text-center p-3 bg-gray-50 rounded hover:bg-zillow-blue hover:text-white transition-all duration-200 active:scale-95 cursor-pointer border-2 border-transparent hover:border-zillow-blue"
-        >
-          <div className="text-xl mb-1">↘</div>
-          <p className="text-xs font-medium truncate">{options.downRight}</p>
-        </button>
       </div>
     </div>
   );
