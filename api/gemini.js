@@ -3,6 +3,8 @@
  * 
  * This function keeps the GEMINI_API_KEY secure by handling AI requests server-side.
  * It accepts user answers, builds a prompt, and returns a city recommendation.
+ * 
+ * Updated: 2025-11-14
  */
 
 import { GoogleGenerativeAI } from '@google/generative-ai';
