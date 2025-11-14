@@ -39,6 +39,12 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({ error: 'Unknown error' }));
         console.error('❌ API Error:', errorData);
+        
+        // Special handling for rate limit errors
+        if (response.status === 429 || errorData.error?.includes('429') || errorData.error?.includes('exhausted')) {
+          throw new Error('You\'ve tested the game too many times! The AI quota has been reached. Please wait a few minutes and try again, or click "Start Over" to play again later.');
+        }
+        
         throw new Error(errorData.error || `API request failed with status ${response.status}`);
       }
 
@@ -81,26 +87,30 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
 
   // Error state
   if (error) {
+    const isRateLimit = error.includes('quota') || error.includes('429') || error.includes('exhausted');
+    
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center py-8">
         <div className="w-full max-w-md mx-auto px-4">
           <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
             <div className="mb-6">
-              <div className="text-6xl">😞</div>
+              <div className="text-6xl">{isRateLimit ? '⏱️' : '😞'}</div>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">
-              Oops! Something Went Wrong
+              {isRateLimit ? 'Rate Limit Reached' : 'Oops! Something Went Wrong'}
             </h2>
             <p className="text-gray-600 mb-6">
               {error}
             </p>
             <div className="flex gap-4">
-              <button
-                onClick={fetchCityRecommendation}
-                className="flex-1 bg-zillow-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
-              >
-                Try Again
-              </button>
+              {!isRateLimit && (
+                <button
+                  onClick={fetchCityRecommendation}
+                  className="flex-1 bg-zillow-blue text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Try Again
+                </button>
+              )}
               <button
                 onClick={onRefuse}
                 className="flex-1 bg-gray-200 text-gray-700 py-3 px-6 rounded-lg font-semibold hover:bg-gray-300 transition-colors"
@@ -108,6 +118,11 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
                 Start Over
               </button>
             </div>
+            {isRateLimit && (
+              <p className="mt-4 text-sm text-gray-500">
+                💡 The free AI tier has a daily limit. Wait 5-10 minutes and try again!
+              </p>
+            )}
           </div>
         </div>
       </div>
