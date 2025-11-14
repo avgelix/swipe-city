@@ -45,11 +45,14 @@ function MapBackground({ questionNumber, city }) {
   useEffect(() => {
     const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-    console.log('🗺️ MapBackground mounted, API key exists:', !!apiKey);
+    console.log('🗺️ MapBackground mounted');
+    console.log('   - API key exists:', !!apiKey);
+    console.log('   - city prop:', city);
+    console.log('   - questionNumber:', questionNumber);
 
     // If no API key is provided, don't try to load the map
     if (!apiKey || apiKey === 'your_api_key_here') {
-      console.warn('Google Maps API key not configured. Map background will not display.');
+      console.warn('⚠️ Google Maps API key not configured. Map background will not display.');
       return;
     }
 
@@ -167,7 +170,10 @@ function MapBackground({ questionNumber, city }) {
     return null;
   }
 
-  console.log('🗺️ MapBackground rendering, isLoaded:', isLoaded);
+  console.log('🗺️ MapBackground rendering');
+  console.log('   - isLoaded:', isLoaded);
+  console.log('   - error:', error);
+  console.log('   - city:', city);
 
   return (
     <div 
@@ -175,15 +181,21 @@ function MapBackground({ questionNumber, city }) {
       style={{
         opacity: 0.6,
         pointerEvents: 'none',
-        zIndex: 0
+        zIndex: 0,
+        backgroundColor: '#93c5fd' // Light blue background for debugging
       }}
     >
       <div 
         ref={mapRef} 
         className="w-full h-full"
-        style={{ backgroundColor: '#e5e7eb' }}
+        style={{ backgroundColor: isLoaded ? 'transparent' : '#e5e7eb' }}
         aria-hidden="true"
       />
+      {!isLoaded && (
+        <div className="absolute inset-0 flex items-center justify-center text-gray-500">
+          Loading map...
+        </div>
+      )}
     </div>
   );
 }

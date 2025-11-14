@@ -116,9 +116,13 @@ function ResultsPage({ answers, onAccept, onRefuse }) {
 
   // Success state - show city match
   return (
-    <div className="relative min-h-screen flex items-center justify-center py-8 overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center py-8 overflow-hidden bg-gray-200">
       {/* Map Background */}
-      <MapBackground city={cityMatch.city} className="absolute inset-0 z-0" />
+      {cityMatch?.city && (
+        <div className="absolute inset-0 z-0">
+          <MapBackground city={cityMatch.city} />
+        </div>
+      )}
       
       {/* Content */}
       <div className="relative z-10 w-full max-w-2xl mx-auto px-4">
