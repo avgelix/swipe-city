@@ -45,16 +45,21 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
     }
   );
 
-  // Get current swipe direction text
-  const getCurrentDirectionText = () => {
+  // Track the current direction text using state
+  const [currentDirectionText, setCurrentDirectionText] = useState('');
+
+  // Update direction text as user drags
+  const updateDirectionText = () => {
     const xVal = x.get();
     const yVal = y.get();
     const distance = Math.sqrt(xVal * xVal + yVal * yVal);
     
-    if (distance < 50) return '';
-    
-    const direction = getSwipeDirection(xVal, yVal);
-    return options[direction] || '';
+    if (distance < 50) {
+      setCurrentDirectionText('');
+    } else {
+      const direction = getSwipeDirection(xVal, yVal);
+      setCurrentDirectionText(options[direction] || '');
+    }
   };
 
   /**
@@ -109,6 +114,7 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
           drag
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragElastic={0.7}
+          onDrag={updateDirectionText}
           onDragEnd={handleDragEnd}
           animate={exitDirection ? { x: exitDirection.x, y: exitDirection.y, opacity: 0 } : {}}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
@@ -119,7 +125,7 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
             style={{ opacity: overlayOpacity }}
           >
             <p className="text-white text-xl md:text-2xl font-bold text-center px-8 leading-tight">
-              {getCurrentDirectionText()}
+              {currentDirectionText}
             </p>
           </motion.div>
 
