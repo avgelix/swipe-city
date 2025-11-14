@@ -33,7 +33,7 @@ export default defineConfig(({ mode }) => {
                 console.log('🚀 Processing', answers?.length || 0, 'answers...');
                 
                 const genAI = new GoogleGenerativeAI(apiKey);
-                const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+                const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
                 const prompt = buildPrompt(answers);
                 
                 const result = await model.generateContent(prompt);
