@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Loader } from '@googlemaps/js-api-loader';
 
 /**
  * MapBackground Component
@@ -52,44 +51,62 @@ function MapBackground({ questionNumber }) {
       return;
     }
 
-    // Initialize the Google Maps loader
-    const loader = new Loader({
-      apiKey: apiKey,
-      version: 'weekly',
-      libraries: []
-    });
-
-    // Load and initialize the map
-    loader
-      .load()
-      .then(() => {
-        if (mapRef.current && !mapInstanceRef.current) {
-          // Create new map instance (only once)
-          // eslint-disable-next-line no-undef
-          mapInstanceRef.current = new google.maps.Map(mapRef.current, {
-            center: { lat: currentCity.lat, lng: currentCity.lng },
-            zoom: 12,
-            disableDefaultUI: true,
-            gestureHandling: 'none',
-            zoomControl: false,
-            scrollwheel: false,
-            disableDoubleClickZoom: true,
-            draggable: false,
-            styles: [
-              {
-                featureType: 'all',
-                elementType: 'labels',
-                stylers: [{ visibility: 'off' }]
-              }
-            ]
-          });
-          setIsLoaded(true);
+    // Load Google Maps dynamically using script tag
+    const loadGoogleMaps = async () => {
+      try {
+        // Check if Google Maps is already loaded
+        if (window.google?.maps) {
+          initMap();
+          return;
         }
-      })
-      .catch((err) => {
+
+        // Create script element
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=weekly`;
+        script.async = true;
+        script.defer = true;
+        
+        script.onload = () => {
+          initMap();
+        };
+        
+        script.onerror = () => {
+          console.error('Error loading Google Maps script');
+          setError('Failed to load map');
+        };
+
+        document.head.appendChild(script);
+      } catch (err) {
         console.error('Error loading Google Maps:', err);
         setError('Failed to load map');
-      });
+      }
+    };
+
+    const initMap = () => {
+      if (mapRef.current && !mapInstanceRef.current && window.google?.maps) {
+        // Create new map instance (only once)
+        mapInstanceRef.current = new window.google.maps.Map(mapRef.current, {
+          center: { lat: currentCity.lat, lng: currentCity.lng },
+          zoom: 12,
+          disableDefaultUI: true,
+          gestureHandling: 'none',
+          zoomControl: false,
+          scrollwheel: false,
+          disableDoubleClickZoom: true,
+          draggable: false,
+          styles: [
+            {
+              featureType: 'all',
+              elementType: 'labels',
+              stylers: [{ visibility: 'off' }]
+            }
+          ]
+        });
+        setIsLoaded(true);
+      }
+    };
+
+    loadGoogleMaps();
   }, []); // Only run once on mount
 
   // Update map center when question changes (debounced via city rotation)
