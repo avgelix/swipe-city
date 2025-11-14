@@ -96,12 +96,13 @@ function MultiChoiceCard({ question, currentQuestion, totalQuestions, onAnswer }
 
         {/* Swipeable Card */}
         <motion.div
-          className="bg-white rounded-2xl shadow-xl p-8 min-h-[350px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing"
+          className="bg-gray-100 rounded-2xl p-8 min-h-[350px] max-w-sm w-full flex flex-col justify-between cursor-grab active:cursor-grabbing"
           style={{
             x,
             y,
             rotate,
-            opacity
+            opacity,
+            boxShadow: '12px 12px 24px rgba(0, 0, 0, 0.1), -12px -12px 24px rgba(255, 255, 255, 0.9)'
           }}
           drag
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}

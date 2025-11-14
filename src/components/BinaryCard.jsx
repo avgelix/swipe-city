@@ -68,11 +68,12 @@ function BinaryCard({ question, currentQuestion, totalQuestions, onAnswer }) {
 
         {/* Swipeable Question Card */}
         <motion.div
-          className="bg-white rounded-2xl shadow-xl p-8 min-h-[400px] flex flex-col justify-between cursor-grab active:cursor-grabbing"
+          className="bg-gray-100 rounded-2xl p-8 min-h-[400px] flex flex-col justify-between cursor-grab active:cursor-grabbing"
           style={{
             x,
             rotate,
-            opacity
+            opacity,
+            boxShadow: '12px 12px 24px rgba(0, 0, 0, 0.1), -12px -12px 24px rgba(255, 255, 255, 0.9)'
           }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
